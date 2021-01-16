@@ -1,5 +1,6 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
+Imports System.IO
 
 Public Class ValidaDocumento
     Dim dtglobal As DataTable = New DataTable
@@ -57,44 +58,29 @@ Public Class ValidaDocumento
 
     Private Sub RevisaDocumento()
         Try
-            'Dim name As String = ConfigurationManager.AppSettings("Cnx")
-            'Dim dr As SqlDataReader
-            Dim dt As DataTable = New DataTable
+            Dim bitCorrecto = True
+            'Recorrer el grid
+            If dgvDocumento.RowCount > 0 Then
+                For i = 0 To dgvDocumento.NewRowIndex - 1
+                    bitCorrecto = False
 
-            Dim connectionString = ConfigurationManager.ConnectionStrings("Cnx").ConnectionString
-            Dim queryString = "dbo.Rutas"
-            Using connection As New SqlConnection(connectionString)
-                Dim command = New SqlCommand(queryString, connection)
-                connection.Open()
+                    Dim fileName As String = dgvDocumento.Rows(i).Cells(2).Value
+                    Dim fi As New IO.FileInfo(fileName)
+                    Dim exists As Boolean = fi.Exists
+                    If fi.Exists Then
+                        Dim size As Long = fi.Length
+                        If size > 0 Then
+                            bitCorrecto = True
+                        End If
+                    End If
 
-                dt.Load(command.ExecuteReader())
-                dtglobal = dt
-                dgvDocumento.DataSource = dt
+                    If bitCorrecto = False Then
+                        dgvDocumento.Rows(i).DefaultCellStyle.BackColor = Color.Red
+                        dgvDocumento.Rows(i).Cells(3).Value = "- NO -"
+                    End If
+                Next
+            End If
 
-                dt = Nothing
-
-                'Using reader As SqlDataReader = command.ExecuteReader()
-                '    While reader.Read()
-                '        'Console.WriteLine(String.Format("{0}, {1}", reader(0), reader(1)))
-                '        MsgBox(String.Format("{0}, {1}", reader(0), reader(1)))
-                '    End While
-                'End Using
-                connection.Close()
-
-            End Using
-
-
-
-            'Dim s As String = ("SELECT * FROM Alumnes")
-            'connexio = New OleDbConnection(myConnectionString)
-            'myCommand = New OleDbCommand(s)
-            'myCommand.Connection = connexio
-            'connexio.Open()
-            'Dim myReader As OleDbDataReader = myCommand.ExecuteReader()
-            'While myReader.Read()
-            '    Dim NOM As String = myReader("NOM")
-            '    Dim COGNOM As String = myReader("COGNOM")
-            'End While
         Catch exc As Exception
             'Throw New GestorExcepcio(exc.Message)
             MsgBox(exc.Message)
