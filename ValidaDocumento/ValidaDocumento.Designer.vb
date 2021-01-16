@@ -29,8 +29,8 @@ Partial Class ValidaDocumento
         Me.lblFecFin = New System.Windows.Forms.Label()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.dgvDocumento = New System.Windows.Forms.DataGridView()
+        CType(Me.dgvDocumento, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnProcesar
@@ -92,20 +92,20 @@ Partial Class ValidaDocumento
         Me.DateTimePicker2.Size = New System.Drawing.Size(104, 20)
         Me.DateTimePicker2.TabIndex = 6
         '
-        'DataGridView1
+        'dgvDocumento
         '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(28, 105)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(591, 199)
-        Me.DataGridView1.TabIndex = 7
+        Me.dgvDocumento.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvDocumento.Location = New System.Drawing.Point(28, 105)
+        Me.dgvDocumento.Name = "dgvDocumento"
+        Me.dgvDocumento.Size = New System.Drawing.Size(591, 199)
+        Me.dgvDocumento.TabIndex = 7
         '
         'ValidaDocumento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(646, 355)
-        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.dgvDocumento)
         Me.Controls.Add(Me.DateTimePicker2)
         Me.Controls.Add(Me.DateTimePicker1)
         Me.Controls.Add(Me.lblFecFin)
@@ -116,7 +116,7 @@ Partial Class ValidaDocumento
         Me.Name = "ValidaDocumento"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Valida Documento"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvDocumento, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -129,5 +129,5 @@ Partial Class ValidaDocumento
     Friend WithEvents lblFecFin As Label
     Friend WithEvents DateTimePicker1 As DateTimePicker
     Friend WithEvents DateTimePicker2 As DateTimePicker
-    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents dgvDocumento As DataGridView
 End Class
