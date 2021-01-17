@@ -30,12 +30,13 @@ Partial Class ValidaDocumento
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
         Me.dgvDocumento = New System.Windows.Forms.DataGridView()
+        Me.btnCopiar = New System.Windows.Forms.Button()
         CType(Me.dgvDocumento, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btnProcesar
         '
-        Me.btnProcesar.Location = New System.Drawing.Point(519, 38)
+        Me.btnProcesar.Location = New System.Drawing.Point(985, 38)
         Me.btnProcesar.Name = "btnProcesar"
         Me.btnProcesar.Size = New System.Drawing.Size(100, 34)
         Me.btnProcesar.TabIndex = 0
@@ -94,17 +95,28 @@ Partial Class ValidaDocumento
         '
         'dgvDocumento
         '
+        Me.dgvDocumento.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvDocumento.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvDocumento.Location = New System.Drawing.Point(28, 105)
+        Me.dgvDocumento.Location = New System.Drawing.Point(28, 101)
         Me.dgvDocumento.Name = "dgvDocumento"
-        Me.dgvDocumento.Size = New System.Drawing.Size(591, 199)
+        Me.dgvDocumento.Size = New System.Drawing.Size(1211, 385)
         Me.dgvDocumento.TabIndex = 7
+        '
+        'btnCopiar
+        '
+        Me.btnCopiar.Location = New System.Drawing.Point(1107, 38)
+        Me.btnCopiar.Name = "btnCopiar"
+        Me.btnCopiar.Size = New System.Drawing.Size(100, 34)
+        Me.btnCopiar.TabIndex = 8
+        Me.btnCopiar.Text = "Copiar"
+        Me.btnCopiar.UseVisualStyleBackColor = True
         '
         'ValidaDocumento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(646, 355)
+        Me.ClientSize = New System.Drawing.Size(1251, 498)
+        Me.Controls.Add(Me.btnCopiar)
         Me.Controls.Add(Me.dgvDocumento)
         Me.Controls.Add(Me.DateTimePicker2)
         Me.Controls.Add(Me.DateTimePicker1)
@@ -116,6 +128,7 @@ Partial Class ValidaDocumento
         Me.Name = "ValidaDocumento"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Valida Documento"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.dgvDocumento, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -130,4 +143,5 @@ Partial Class ValidaDocumento
     Friend WithEvents DateTimePicker1 As DateTimePicker
     Friend WithEvents DateTimePicker2 As DateTimePicker
     Friend WithEvents dgvDocumento As DataGridView
+    Friend WithEvents btnCopiar As Button
 End Class

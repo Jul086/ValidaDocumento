@@ -75,7 +75,8 @@ Public Class ValidaDocumento
                     End If
 
                     If bitCorrecto = False Then
-                        dgvDocumento.Rows(i).DefaultCellStyle.BackColor = Color.Red
+                        dgvDocumento.Rows(i).DefaultCellStyle.BackColor = ColorTranslator.FromHtml("#640000") 'Color.Red
+                        dgvDocumento.Rows(i).DefaultCellStyle.ForeColor = Color.White
                         dgvDocumento.Rows(i).Cells(3).Value = "- NO -"
                     End If
                 Next
@@ -88,5 +89,19 @@ Public Class ValidaDocumento
 
     End Sub
 
-
+    Private Sub btnCopiar_Click(sender As Object, e As EventArgs) Handles btnCopiar.Click
+        Try
+            If dgvDocumento.Rows.Count = 0 Then Exit Sub
+            dgvDocumento.SuspendLayout()
+            dgvDocumento.RowHeadersVisible = False
+            'If dgvDocumento.SelectedRows.Count = 0 Then dgvDocumento.SelectAll()
+            Clipboard.SetDataObject(dgvDocumento.GetClipboardContent())
+            dgvDocumento.ClearSelection()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            dgvDocumento.RowHeadersVisible = True
+            dgvDocumento.ResumeLayout()
+        End Try
+    End Sub
 End Class
