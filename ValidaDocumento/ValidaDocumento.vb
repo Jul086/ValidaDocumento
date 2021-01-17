@@ -5,8 +5,150 @@ Imports System.IO
 Public Class ValidaDocumento
     Dim dtglobal As DataTable = New DataTable
     Private Sub btnProcesar_Click(sender As Object, e As EventArgs) Handles btnProcesar.Click
-        EjecutaSQL()
-        RevisaDocumento()
+        If Len(txtCliente.Text) = 0 Then
+            MsgBox("El Cliente no puede estar vacio")
+            txtCliente.Focus()
+            Return
+        End If
+        ExpedientePorAuditar()
+    End Sub
+
+    Private Sub ExpedientePorAuditar()
+        Try
+            Dim dt As DataTable = New DataTable
+
+            Dim connectionString = ConfigurationManager.ConnectionStrings("Cnx").ConnectionString
+            Dim queryString = "dbo.csp_AUX_ExpedientesPendientesAuditar "
+            queryString += " @FINICIAL = '" & dtpFecIni.Value.ToString("yyyy-MM-dd") & "'"
+            queryString += " , @FFINAL = '" & dtpFecFin.Value.ToString("yyyy-MM-dd") & "'"
+            queryString += " , @CTE = '" & Trim(txtCliente.Text) & "'"
+
+            Using connection As New SqlConnection(connectionString)
+                Dim command = New SqlCommand(queryString, connection)
+                connection.Open()
+
+                dt.Load(command.ExecuteReader())
+                dtglobal = dt
+
+                dt = Nothing
+
+                connection.Close()
+            End Using
+
+            EjSplit
+            ObtieneRuta()
+
+        Catch ex As Exception
+            'Throw New GestorExcepcio(exc.Message)
+            MsgBox(ex.Message, vbOKOnly, "Error")
+        End Try
+
+    End Sub
+
+    Private Sub EjSplit()
+        'Dim testString As String = "apple    pear banana  "
+        Dim testString As String = "apple/pear/banana  "
+        Dim testArray() As String = Split(testString, "/")
+        '' testArray holds {"apple", "", "", "", "pear", "banana", "", ""}
+        'Dim lastNonEmpty As Integer = -1
+        'For i As Integer = 0 To testArray.Length - 1
+        '    If testArray(i) <> "/" Then
+        '        lastNonEmpty += 1
+        '        testArray(lastNonEmpty) = testArray(i)
+        '    End If
+        'Next
+        'ReDim Preserve testArray(lastNonEmpty)
+        '' testArray now holds {"apple", "pear", "banana"}
+
+    End Sub
+
+
+    Private Sub ObtieneRuta()
+        Dim dt As DataTable = New DataTable
+        Dim MiTabla As New DataTable
+        ' Create four typed columns in the DataTable.
+        MiTabla.Columns.Add("Factura", GetType(String))
+        MiTabla.Columns.Add("Referencia", GetType(String))
+        MiTabla.Columns.Add("Rectificacion", GetType(Integer))
+        MiTabla.Columns.Add("Cove Ruta", GetType(String))
+        MiTabla.Columns.Add("Cove Valida", GetType(String))
+        MiTabla.Columns.Add("Doda Ruta", GetType(String))
+        MiTabla.Columns.Add("Doda Valida", GetType(String))
+        MiTabla.Columns.Add("Pedimento Ruta", GetType(String))
+        MiTabla.Columns.Add("Pedimento Valida", GetType(String))
+        MiTabla.Columns.Add("HC Ruta", GetType(String))
+        MiTabla.Columns.Add("HC Valida", GetType(String))
+        MiTabla.Columns.Add("Cuenta de Gastos Ruta", GetType(String))
+        MiTabla.Columns.Add("Cuenta de Gastos Valida", GetType(String))
+        MiTabla.Columns.Add("Simplificado1 Ruta", GetType(String))
+        MiTabla.Columns.Add("Simplificado1 Valida", GetType(String))
+        MiTabla.Columns.Add("Simplificado2 Ruta", GetType(String))
+        MiTabla.Columns.Add("Simplificado2 Valida", GetType(String))
+        MiTabla.Columns.Add("Archivo Val Ruta", GetType(String))
+        MiTabla.Columns.Add("Archivo Val Valida", GetType(String))
+        MiTabla.Columns.Add("Banco Ruta", GetType(String))
+        MiTabla.Columns.Add("Banco Valida", GetType(String))
+        MiTabla.Columns.Add("FacturaXML Ruta", GetType(String))
+        MiTabla.Columns.Add("FacturaXML Valida", GetType(String))
+        MiTabla.Columns.Add("FacturaPDF Ruta", GetType(String))
+        MiTabla.Columns.Add("FacturaPDF Valida", GetType(String))
+        MiTabla.Columns.Add("Acuse Ruta", GetType(String))
+        MiTabla.Columns.Add("Acuse Valida", GetType(String))
+
+        Dim connectionString = ConfigurationManager.ConnectionStrings("Cnx").ConnectionString
+        Dim queryString = "dbo.sp_vista_aduasis_pu_expedienteUnico "
+
+        Try
+            For Each row As DataRow In dtglobal.Rows
+                Dim Factura As String = CStr(row("Factura"))
+                Dim Referencia As String = CStr(row("Referencia"))
+                Dim Rectificacion As String = CStr(row("Rectificacion"))
+                Dim Parametros As String = ""
+
+                Parametros += " @referencia = '" & Trim(Referencia) & "'"
+                Parametros += " , @FECHAI = NULL "
+                Parametros += " , @FECHAF = NULL "
+                Parametros += " , @rectificacion= '" & Trim(Rectificacion) & "'"
+                queryString += Parametros
+
+                Using connection As New SqlConnection(connectionString)
+                    Dim command = New SqlCommand(queryString, connection)
+                    connection.Open()
+
+                    dt.Load(command.ExecuteReader())
+                    If dt.Rows(0).Item("Referencia").ToString() <> "" Then
+
+                        MiTabla.Rows.Add(Factura,
+                                         Referencia,
+                                         Rectificacion,
+                                         dt.Rows(0).Item("Cove_local").ToString(), " ",
+                                         dt.Rows(0).Item("Doda_local").ToString(), " ",
+                                         dt.Rows(0).Item("Pedimento_local").ToString(), " ",
+                                         dt.Rows(0).Item("Hc_local").ToString(), " ",
+                                         dt.Rows(0).Item("Mv_local").ToString(), " ",
+                                         dt.Rows(0).Item("Simplificado1_local").ToString(), " ",
+                                         dt.Rows(0).Item("Simplificado2_local").ToString(), " ",
+                                         dt.Rows(0).Item("Archivo_validacion_local").ToString(), " ",
+                                         dt.Rows(0).Item("Archivo_banco_local").ToString(), " ",
+                                         dt.Rows(0).Item("Factura_xml_local").ToString(), " ",
+                                         dt.Rows(0).Item("Factura_pdf_local").ToString(), " ",
+                                         dt.Rows(0).Item("Acuse_Cove_local").ToString(), " ")
+                    End If
+
+
+                    dt = Nothing
+                    connection.Close()
+                End Using
+
+
+            Next
+            RevisaDocumento()
+
+        Catch ex As Exception
+            MsgBox(ex.Message, vbOKOnly, "Error")
+        End Try
+
+
     End Sub
 
     Private Sub EjecutaSQL()
@@ -16,7 +158,11 @@ Public Class ValidaDocumento
             Dim dt As DataTable = New DataTable
 
             Dim connectionString = ConfigurationManager.ConnectionStrings("Cnx").ConnectionString
-            Dim queryString = "dbo.Rutas"
+            Dim queryString = "dbo.csp_AUX_ExpedientesPendientesAuditar "
+            queryString += " @FINICIAL = '" & dtpFecIni.Value.ToString("yyyy-MM-dd") & "'"
+            queryString += " , @FFINAL = '" & dtpFecFin.Value.ToString("yyyy-MM-dd") & "'"
+            queryString += " , @CTE = '" & Trim(txtCliente.Text) & "'"
+
             Using connection As New SqlConnection(connectionString)
                 Dim command = New SqlCommand(queryString, connection)
                 connection.Open()

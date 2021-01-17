@@ -27,8 +27,8 @@ Partial Class ValidaDocumento
         Me.txtCliente = New System.Windows.Forms.TextBox()
         Me.lblFecIni = New System.Windows.Forms.Label()
         Me.lblFecFin = New System.Windows.Forms.Label()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
-        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
+        Me.dtpFecFin = New System.Windows.Forms.DateTimePicker()
+        Me.dtpFecIni = New System.Windows.Forms.DateTimePicker()
         Me.dgvDocumento = New System.Windows.Forms.DataGridView()
         Me.btnCopiar = New System.Windows.Forms.Button()
         CType(Me.dgvDocumento, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -39,7 +39,7 @@ Partial Class ValidaDocumento
         Me.btnProcesar.Location = New System.Drawing.Point(985, 38)
         Me.btnProcesar.Name = "btnProcesar"
         Me.btnProcesar.Size = New System.Drawing.Size(100, 34)
-        Me.btnProcesar.TabIndex = 0
+        Me.btnProcesar.TabIndex = 3
         Me.btnProcesar.Text = "Procesar"
         Me.btnProcesar.UseVisualStyleBackColor = True
         '
@@ -57,7 +57,7 @@ Partial Class ValidaDocumento
         Me.txtCliente.Location = New System.Drawing.Point(28, 52)
         Me.txtCliente.Name = "txtCliente"
         Me.txtCliente.Size = New System.Drawing.Size(100, 20)
-        Me.txtCliente.TabIndex = 2
+        Me.txtCliente.TabIndex = 0
         '
         'lblFecIni
         '
@@ -77,21 +77,21 @@ Partial Class ValidaDocumento
         Me.lblFecFin.TabIndex = 4
         Me.lblFecFin.Text = "Fec. Final"
         '
-        'DateTimePicker1
+        'dtpFecFin
         '
-        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(344, 52)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(100, 20)
-        Me.DateTimePicker1.TabIndex = 5
+        Me.dtpFecFin.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpFecFin.Location = New System.Drawing.Point(344, 52)
+        Me.dtpFecFin.Name = "dtpFecFin"
+        Me.dtpFecFin.Size = New System.Drawing.Size(100, 20)
+        Me.dtpFecFin.TabIndex = 2
         '
-        'DateTimePicker2
+        'dtpFecIni
         '
-        Me.DateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker2.Location = New System.Drawing.Point(178, 52)
-        Me.DateTimePicker2.Name = "DateTimePicker2"
-        Me.DateTimePicker2.Size = New System.Drawing.Size(104, 20)
-        Me.DateTimePicker2.TabIndex = 6
+        Me.dtpFecIni.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpFecIni.Location = New System.Drawing.Point(178, 52)
+        Me.dtpFecIni.Name = "dtpFecIni"
+        Me.dtpFecIni.Size = New System.Drawing.Size(104, 20)
+        Me.dtpFecIni.TabIndex = 1
         '
         'dgvDocumento
         '
@@ -107,7 +107,7 @@ Partial Class ValidaDocumento
         Me.btnCopiar.Location = New System.Drawing.Point(1107, 38)
         Me.btnCopiar.Name = "btnCopiar"
         Me.btnCopiar.Size = New System.Drawing.Size(100, 34)
-        Me.btnCopiar.TabIndex = 8
+        Me.btnCopiar.TabIndex = 4
         Me.btnCopiar.Text = "Copiar"
         Me.btnCopiar.UseVisualStyleBackColor = True
         '
@@ -118,8 +118,8 @@ Partial Class ValidaDocumento
         Me.ClientSize = New System.Drawing.Size(1251, 498)
         Me.Controls.Add(Me.btnCopiar)
         Me.Controls.Add(Me.dgvDocumento)
-        Me.Controls.Add(Me.DateTimePicker2)
-        Me.Controls.Add(Me.DateTimePicker1)
+        Me.Controls.Add(Me.dtpFecIni)
+        Me.Controls.Add(Me.dtpFecFin)
         Me.Controls.Add(Me.lblFecFin)
         Me.Controls.Add(Me.lblFecIni)
         Me.Controls.Add(Me.txtCliente)
@@ -140,8 +140,8 @@ Partial Class ValidaDocumento
     Friend WithEvents txtCliente As TextBox
     Friend WithEvents lblFecIni As Label
     Friend WithEvents lblFecFin As Label
-    Friend WithEvents DateTimePicker1 As DateTimePicker
-    Friend WithEvents DateTimePicker2 As DateTimePicker
+    Friend WithEvents dtpFecFin As DateTimePicker
+    Friend WithEvents dtpFecIni As DateTimePicker
     Friend WithEvents dgvDocumento As DataGridView
     Friend WithEvents btnCopiar As Button
 End Class
